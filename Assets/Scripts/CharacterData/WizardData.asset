@@ -20,10 +20,10 @@ MonoBehaviour:
   spellSlots: 0
   characterSprite: {fileID: 21300000, guid: 13556502bb7ae72429c34ba47d87e3ed, type: 3}
   baseHealth: 100
-  baseMana: 0
+  baseMana: 150
   baseAttackDamage: 0
   baseMagicDamage: 10
-  baseHealthRegen: 4
-  baseManaRegen: 0
-  baseAttackSpeed: 0
-  baseMovementSpeed: 0
+  baseHealthRegen: 5
+  baseManaRegen: 15
+  baseAttackSpeed: 0.5
+  baseMovementSpeed: 7

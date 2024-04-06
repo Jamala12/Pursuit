@@ -19,11 +19,11 @@ MonoBehaviour:
   hasReducedDamage: 0
   spellSlots: 0
   characterSprite: {fileID: 21300000, guid: a9146559077c57842acfe4826a5c5120, type: 3}
-  baseHealth: 0
+  baseHealth: 100
   baseMana: 0
-  baseAttackDamage: 0
+  baseAttackDamage: 10
   baseMagicDamage: 0
-  baseHealthRegen: 0
+  baseHealthRegen: 5
   baseManaRegen: 0
-  baseAttackSpeed: 0
-  baseMovementSpeed: 0
+  baseAttackSpeed: 1
+  baseMovementSpeed: 4

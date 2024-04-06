@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LoadCharacter : MonoBehaviour
@@ -6,66 +7,59 @@ public class LoadCharacter : MonoBehaviour
     public CharacterData wizardData;
     public CharacterData knightData;
     public CharacterData warriorData;
+    private Dictionary<string, CharacterData> characterDataDictionary;
     private SpriteRenderer spriteRenderer;
 
-    // Basic stats, initialized from CharacterData
-    protected string characterName;
-    protected bool canUseMagic;
-    protected bool canUsePhysical;
-    protected bool canDualWield;
-    protected bool hasReducedDamage;
-    protected int spellSlots;
-    protected int health;
-    protected int mana;
-    protected int attackDamage;
-    protected int magicDamage;
-    protected float healthRegen;
-    protected float manaRegen;
-    protected float attackSpeed;
-    protected float movementSpeed;
-    void Start()
+    private void Awake()
     {
+        characterDataDictionary = new Dictionary<string, CharacterData>
+        {
+            { "Wizard", wizardData },
+            { "Knight", knightData },
+            { "Warrior", warriorData }
+        };
         spriteRenderer = GetComponent<SpriteRenderer>();
-        LoadSelectedCharacter();
     }
 
-    private void LoadSelectedCharacter()
+    private void Start()
     {
-        string selectedCharacter = PlayerPrefs.GetString("SelectedCharacter", "DefaultCharacterName");
-        switch (selectedCharacter)
+        ApplyCharacterSprite();
+    }
+
+    public Sprite GetCharacterSprite()
+    {
+        CharacterData characterData = GetSelectedCharacterData();
+        return characterData != null ? characterData.characterSprite : null;
+    }
+
+    private void ApplyCharacterSprite()
+    {
+        if (spriteRenderer != null)
         {
-            case "Wizard":
-                ApplyCharacterData(wizardData);
-                break;
-            case "Knight":
-                ApplyCharacterData(knightData);
-                break;
-            case "Warrior":
-                ApplyCharacterData(warriorData);
-                break;
-            default:
-                Debug.LogError("No character selected or character not found.");
-                break;
+            spriteRenderer.sprite = GetCharacterSprite();
+        }
+        else
+        {
+            Debug.LogError("No SpriteRenderer found on the GameObject.");
         }
     }
 
-    private void ApplyCharacterData(CharacterData characterData)
+    public float GetMovementSpeed()
     {
-        spriteRenderer.sprite = characterData.characterSprite;
-        health = characterData.baseHealth;
-        movementSpeed = characterData.baseMovementSpeed;
-        healthRegen = characterData.baseHealthRegen;
-        mana = characterData.baseMana;
-        manaRegen = characterData.baseManaRegen;
-        attackDamage = characterData.baseAttackDamage;
-        magicDamage = characterData.baseMagicDamage;
-        attackSpeed = characterData.baseAttackSpeed;
+        CharacterData characterData = GetSelectedCharacterData();
+        return characterData != null ? characterData.baseMovementSpeed : 0f;
+    }
 
-        characterName = characterData.characterName;
-        canUseMagic = characterData.canUseMagic;
-        canDualWield = characterData.canDualWield;
-        hasReducedDamage = characterData.hasReducedDamage;
-        spellSlots = characterData.spellSlots;
+    public CharacterData GetSelectedCharacterData()
+    {
+        string selectedCharacter = PlayerPrefs.GetString("SelectedCharacter", "DefaultCharacterName");
+        if (characterDataDictionary.TryGetValue(selectedCharacter, out CharacterData data))
+        {
+            return data;
+        }
+        Debug.LogError("Character not found: " + selectedCharacter);
+        return null; // Consider how to handle this appropriately.
     }
 }
+
 
