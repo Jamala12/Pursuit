@@ -9,6 +9,7 @@ public class LoadCharacter : MonoBehaviour
     public CharacterData warriorData;
     private Dictionary<string, CharacterData> characterDataDictionary;
     private SpriteRenderer spriteRenderer;
+    public Transform weaponSlot1; // Assign this in the Inspector
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class LoadCharacter : MonoBehaviour
     private void Start()
     {
         ApplyCharacterSprite();
+        LoadEquipment();
     }
 
     public Sprite GetCharacterSprite()
@@ -57,9 +59,34 @@ public class LoadCharacter : MonoBehaviour
         {
             return data;
         }
-        Debug.LogError("Character not found: " + selectedCharacter);
-        return null; // Consider how to handle this appropriately.
+        Debug.LogError("Character data not found: " + selectedCharacter);
+        return null; // handle this
+    }
+
+    public float GetAttackSpeed()
+    {
+        CharacterData characterData = GetSelectedCharacterData();
+        return characterData != null ? characterData.baseAttackSpeed : 1f; // Default to 1 attack per second
+    }
+
+    private void LoadEquipment()
+    {
+        // Clear existing equipment
+        foreach (Transform child in weaponSlot1)
+        {
+            Destroy(child.gameObject);
+        }
+
+        CharacterData characterData = GetSelectedCharacterData();
+        if (characterData != null && characterData.equipmentPrefab != null)
+        {
+            // Instantiate the equipment prefab and parent it to the equipmentSlot
+            Instantiate(characterData.equipmentPrefab, weaponSlot1.position, weaponSlot1.rotation, weaponSlot1);
+        }
+        else
+        {
+            Debug.LogWarning("No equipment prefab found for the selected character.");
+        }
     }
 }
-
 

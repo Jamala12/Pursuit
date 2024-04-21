@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerMana : MonoBehaviour
 {
-    [SerializeField]
     private int currentMana;
-    [SerializeField]
     private int maxMana;
     private float manaRegenRate;
     private LoadCharacter loadCharacter;
@@ -41,14 +39,12 @@ public class PlayerMana : MonoBehaviour
 
     private void InitializeMana()
     {
-        Debug.Log("Initializing mana");
         CharacterData characterData = loadCharacter.GetSelectedCharacterData();
         if (characterData != null)
         {
             maxMana = characterData.baseMana;
             currentMana = maxMana;
             manaRegenRate = characterData.baseManaRegen;
-            Debug.Log("mana Initialized");
 
         }
         else
@@ -80,7 +76,6 @@ public class PlayerMana : MonoBehaviour
         else
         {
             currentMana -= amount;
-            Debug.Log("mana lost");
             manaUI.UpdateManaUI(currentMana);
         }
     }

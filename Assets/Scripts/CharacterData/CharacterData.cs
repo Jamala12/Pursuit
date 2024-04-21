@@ -22,5 +22,7 @@ public class CharacterData : ScriptableObject
     public float baseManaRegen;
     public float baseAttackSpeed;
     public float baseMovementSpeed;
+
+    public GameObject equipmentPrefab;
 }
 
