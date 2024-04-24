@@ -2,82 +2,82 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Manages the player's mana including initialization, regeneration, and consumption.
 public class PlayerMana : MonoBehaviour
 {
-    private int currentMana;
-    private int maxMana;
-    private float manaRegenRate;
-    private LoadCharacter loadCharacter;
-    private ManaUI manaUI;
+    private int currentMana; // Current amount of mana available to the player.
+    private int maxMana; // Maximum mana capacity based on character data.
+    private float manaRegenRate; // Rate at which mana regenerates over time.
+    private LoadCharacter loadCharacter; // Component to load character data.
+    private ManaUI manaUI; // Reference to the Mana UI manager.
 
     private void Awake()
     {
-        loadCharacter = GetComponent<LoadCharacter>();
-        manaUI = FindObjectOfType<ManaUI>();
+        loadCharacter = GetComponent<LoadCharacter>(); // Retrieves LoadCharacter from the GameObject.
+        manaUI = FindObjectOfType<ManaUI>(); // Finds the ManaUI in the scene.
         if (loadCharacter == null)
         {
-            Debug.LogError("LoadCharacter component not found on the GameObject.");
+            Debug.LogError("LoadCharacter component not found on the GameObject."); // Error handling if LoadCharacter is missing.
             return;
         }
-
-        InitializeMana();
+        InitializeMana(); // Initialize mana based on character data.
     }
 
     private void Start()
     {
         if (manaUI != null)
         {
-            manaUI.InitializeManaUI(maxMana);
+            manaUI.InitializeManaUI(maxMana); // Initialize the UI with the maximum mana.
         }
         else
         {
-            Debug.LogError("ManaUI component not found in the scene.");
+            Debug.LogError("ManaUI component not found in the scene."); // Error handling if ManaUI is missing.
         }
-
-        StartCoroutine(RegenerateMana());
+        StartCoroutine(RegenerateMana()); // Start the mana regeneration process.
     }
 
+    // Initializes the mana values based on the selected character data.
     private void InitializeMana()
     {
-        CharacterData characterData = loadCharacter.GetSelectedCharacterData();
+        CharacterData characterData = loadCharacter.GetSelectedCharacterData(); // Get character data.
         if (characterData != null)
         {
-            maxMana = characterData.baseMana;
-            currentMana = maxMana;
-            manaRegenRate = characterData.baseManaRegen;
-
+            maxMana = characterData.baseMana; // Set maximum mana from character data.
+            currentMana = maxMana; // Set current mana to maximum at start.
+            manaRegenRate = characterData.baseManaRegen; // Set mana regeneration rate.
         }
         else
         {
-            Debug.LogError("Failed to load character data for mana initialization.");
+            Debug.LogError("Failed to load character data for mana initialization."); // Error handling if data is not loaded.
         }
     }
 
+    // Coroutine that manages the regeneration of mana over time.
     private IEnumerator RegenerateMana()
     {
         while (true)
         {
             if (currentMana < maxMana)
             {
-                currentMana += Mathf.FloorToInt(manaRegenRate);
-                currentMana = Mathf.Min(currentMana, maxMana);
-                manaUI.UpdateManaUI(currentMana);
+                currentMana += Mathf.FloorToInt(manaRegenRate); // Increment current mana based on regen rate.
+                currentMana = Mathf.Min(currentMana, maxMana); // Ensure current mana does not exceed max mana.
+                manaUI.UpdateManaUI(currentMana); // Update the mana UI.
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1); // Wait for 1 second before the next increment.
         }
     }
 
+    // Method to handle mana consumption.
     public void UseMana(int amount)
     {
-        if (currentMana - amount <= 0)
+        if (currentMana - amount < 0)
         {
-            Debug.Log("not enough mana");
+            Debug.Log("Not enough mana"); // Log if there is not enough mana to perform the action.
         }
         else
         {
-            currentMana -= amount;
-            manaUI.UpdateManaUI(currentMana);
+            currentMana -= amount; // Deduct mana amount.
+            manaUI.UpdateManaUI(currentMana); // Update the UI with the new mana level.
         }
     }
 }
-

@@ -2,53 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Manages the input handling for player actions, particularly aiming and attacking.
 public class PlayerInput : MonoBehaviour
 {
-    public Transform firePointAngle;
-    private Weapon currentWeapon;
-    private LoadCharacter loadCharacter;
-    private float attackSpeed;
-    private float timeSinceLastAttack = 10f;
+    public Transform firePointAngle; // Transform to control the direction the weapon fires towards.
+    private Weapon currentWeapon; // Currently equipped weapon.
+    private LoadCharacter loadCharacter; // Component to load character data.
+    private float attackSpeed; // Attack speed derived from character data.
+    private float timeSinceLastAttack = 10f; // Time elapsed since the last attack.
 
     void Start()
     {
-        currentWeapon = GetComponentInChildren<Weapon>();
-        loadCharacter = GetComponent<LoadCharacter>(); // Assuming LoadCharacter is on the same GameObject
+        currentWeapon = GetComponentInChildren<Weapon>(); // Retrieves the Weapon component from the child GameObject.
+        loadCharacter = GetComponent<LoadCharacter>(); // Assuming LoadCharacter is on the same GameObject.
         if (loadCharacter != null)
         {
-            attackSpeed = loadCharacter.GetAttackSpeed();
+            attackSpeed = loadCharacter.GetAttackSpeed(); // Set attack speed based on character data.
         }
     }
 
     void Update()
     {
-        AimAtMouse();
-        timeSinceLastAttack += Time.deltaTime;
+        AimAtMouse(); // Update aiming direction each frame.
+        timeSinceLastAttack += Time.deltaTime; // Increment the time since last attack by the time elapsed since last frame.
 
         if (Input.GetButtonDown("Fire1") && timeSinceLastAttack >= 1f / attackSpeed)
         {
             if (currentWeapon != null)
             {
-                currentWeapon.Attack();
-                timeSinceLastAttack = 0f;
+                currentWeapon.Attack(); // Trigger attack from the weapon.
+                timeSinceLastAttack = 0f; // Reset the time since last attack.
             }
         }
     }
 
+    // Updates the firePointAngle to aim towards the mouse position.
     void AimAtMouse()
     {
-        Vector3 mousePosition = GetMouseWorldPosition();
-        Vector3 aimDirection = (mousePosition - transform.position).normalized; // Normalized to get the direction vector
-        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        Vector3 mousePosition = GetMouseWorldPosition(); // Get mouse position in world coordinates.
+        Vector3 aimDirection = (mousePosition - transform.position).normalized; // Calculate direction to aim.
+        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg; // Convert direction to angle.
 
-        // Aim fire point at mouse without flipping the player
-        firePointAngle.eulerAngles = new Vector3(0, 0, angle);
+        firePointAngle.eulerAngles = new Vector3(0, 0, angle); // Set the rotation of the fire point.
     }
 
+    // Returns the mouse position in world space, accounting for the camera's projection.
     public static Vector3 GetMouseWorldPosition()
     {
-        Vector3 screenPosition = Input.mousePosition;
-        screenPosition.z = Camera.main.nearClipPlane; // Use the camera's near clip plane to ensure correct conversion
-        return Camera.main.ScreenToWorldPoint(screenPosition);
+        Vector3 screenPosition = Input.mousePosition; // Get the current mouse screen position.
+        screenPosition.z = Camera.main.nearClipPlane; // Set Z to the near clip plane of the camera.
+        return Camera.main.ScreenToWorldPoint(screenPosition); // Convert to world position.
     }
 }

@@ -29,11 +29,10 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        // Optionally, use tags or layers to differentiate between wall, enemy, and other collidable objects
+        
         if (hitInfo.CompareTag("Enemy") || hitInfo.CompareTag("Wall"))
         {
-            // Here you can add additional logic for what happens upon hitting an enemy or wall
-            // For example, dealing damage to an enemy
+            // logic for what happens upon hitting an enemy or wall
 
             Destroy(gameObject); // Destroy the projectile on collision
         }

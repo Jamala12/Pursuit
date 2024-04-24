@@ -7,41 +7,43 @@ using UnityEngine;
 public class CorridorFirstDungeonGenerator : RandomWalkMapGenerator
 {
     [SerializeField]
-    private int corridorLength = 30;
+    private int corridorLength = 30; // Defines the length of each corridor.
     [SerializeField]
-    private int corridorCount = 10;
+    private int corridorCount = 10; // Defines the number of corridors to generate.
     [SerializeField]
     [Range(0.1f, 1)]
-    private float roomPercent = 0.8f;
+    private float roomPercent = 0.8f; // Percentage of potential room positions to actually turn into rooms.
 
     protected override void RunProceduralGeneration()
     {
-        CorridorFirstGenerator();
+        CorridorFirstGenerator(); // Primary method that coordinates the dungeon generation.
     }
 
     private void CorridorFirstGenerator()
     {
-        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
-        HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>(); // Tracks positions of all floor tiles.
+        HashSet<Vector2Int> potentialRoomPositions = new HashSet<Vector2Int>(); // Tracks potential room positions.
 
-        List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions);
-        
-        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions);
+        List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions); // Generate corridors.
 
-        List<Vector2Int> deadEnds = FindAllDeadEnds(floorPositions);
+        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions); // Generate rooms based on potential positions.
 
-        CreateRoomsAtDeadEnd(deadEnds, roomPositions);
+        List<Vector2Int> deadEnds = FindAllDeadEnds(floorPositions); // Identify all dead ends in the corridors.
 
+        CreateRoomsAtDeadEnd(deadEnds, roomPositions); // Optionally add rooms at dead ends.
+
+        // Increase corridor size for visual and gameplay purposes.
         for (int i = 0; i < corridors.Count; i++)
         {
             corridors[i] = IncreaseCorridorSize(corridors[i]);
-            floorPositions.UnionWith(corridors[i]);
+            floorPositions.UnionWith(corridors[i]); // Add the updated corridors to floor positions.
         }
 
-        floorPositions.UnionWith(roomPositions);
+        floorPositions.UnionWith(roomPositions); // Combine room positions with floor positions.
 
-        tilemapVisualizer.PaintFloorTiles(floorPositions);
-        WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
+        tilemapVisualizer.PaintFloorTiles(floorPositions); // Visualize floor tiles.
+        WallGenerator.CreateWalls(floorPositions, tilemapVisualizer); // Generate walls around the floor tiles.
+         // ------------------------------------------------ FINISH COMMENTING! -------------------------------------------
 
     }
 
