@@ -25,5 +25,9 @@ MonoBehaviour:
   baseMagicDamage: 10
   baseHealthRegen: 5
   baseManaRegen: 5
-  baseAttackSpeed: 1
+  baseAttackSpeed: 0.6
   baseMovementSpeed: 5
+  equipmentPrefab: {fileID: 1885405734429921237, guid: e37e06362ce3dd74ca7dc09e6362430a, type: 3}
+  starterAbilities:
+  - {fileID: 0}
+  - {fileID: 0}

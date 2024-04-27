@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewCharacter", menuName = "Character")]
@@ -24,5 +22,5 @@ public class CharacterData : ScriptableObject
     public float baseMovementSpeed;
 
     public GameObject equipmentPrefab;
+    public Ability[] starterAbilities; // Array of starter abilities
 }
-

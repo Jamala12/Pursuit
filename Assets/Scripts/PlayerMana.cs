@@ -68,16 +68,24 @@ public class PlayerMana : MonoBehaviour
     }
 
     // Method to handle mana consumption.
-    public void UseMana(int amount)
+    public bool UseMana(int amount)
     {
-        if (currentMana - amount < 0)
+        if (currentMana >= amount)
         {
-            Debug.Log("Not enough mana"); // Log if there is not enough mana to perform the action.
+            currentMana -= amount;
+            UpdateManaUI(); // Make sure to update any UI elements or state dependent on mana.
+            return true;
         }
         else
         {
-            currentMana -= amount; // Deduct mana amount.
-            manaUI.UpdateManaUI(currentMana); // Update the UI with the new mana level.
+            Debug.Log("Not enough mana");
+            return false;
         }
+    }
+
+    private void UpdateManaUI()
+    {
+        // Assuming manaUI is a reference to a UI component that displays mana
+        manaUI.UpdateManaUI(currentMana);
     }
 }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71cbb63e6a90b04b91f3bc98f8103c9, type: 3}
+  m_Name: Fireball
+  m_EditorClassIdentifier: 
+  abilityName: Fireball
+  cooldownTime: 1
+  activeTime: 1
+  manaCost: 50
+  fireballPrefab: {fileID: 3167811727689791706, guid: 142c667c8140ce445bc5a06f8fe45121, type: 3}

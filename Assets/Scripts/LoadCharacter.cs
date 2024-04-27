@@ -11,6 +11,7 @@ public class LoadCharacter : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Transform weaponSlot1; // Assign this in the Inspector
     public Transform firePointAngle;
+    public AbilityHolder abilityHolder;
 
     private void Awake()
     {
@@ -27,6 +28,20 @@ public class LoadCharacter : MonoBehaviour
     {
         ApplyCharacterSprite();
         LoadEquipment();
+        InitializeAbilities();
+    }
+
+    private void InitializeAbilities()
+    {
+        CharacterData characterData = GetSelectedCharacterData();
+        if (characterData != null && characterData.starterAbilities != null && abilityHolder != null)
+        {
+            abilityHolder.abilities = characterData.starterAbilities;
+        }
+        else
+        {
+            Debug.LogError("Failed to initialize abilities. Make sure character data and abilities are set and AbilityHolder is assigned.");
+        }
     }
 
     public Sprite GetCharacterSprite()
@@ -84,11 +99,11 @@ public class LoadCharacter : MonoBehaviour
             // Instantiate the equipment prefab and parent it to the equipmentSlot
             GameObject equipmentInstance = Instantiate(characterData.equipmentPrefab, weaponSlot1.position, weaponSlot1.rotation, weaponSlot1);
             
-            StarterWand wand = equipmentInstance.GetComponent<StarterWand>();
-            if (wand != null)
+            Weapon weapon = equipmentInstance.GetComponent<Weapon>();
+            if (weapon != null)
             {
                 Transform firePoint = firePointAngle.GetChild(0);
-                wand.SetFirePoint(firePoint);
+                weapon.SetFirePoint(firePoint);
             }
             else
             {
