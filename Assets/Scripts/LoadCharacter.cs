@@ -10,6 +10,7 @@ public class LoadCharacter : MonoBehaviour
     private Dictionary<string, CharacterData> characterDataDictionary;
     private SpriteRenderer spriteRenderer;
     public Transform weaponSlot1; // Assign this in the Inspector
+    public Transform firePointAngle;
 
     private void Awake()
     {
@@ -81,11 +82,18 @@ public class LoadCharacter : MonoBehaviour
         if (characterData != null && characterData.equipmentPrefab != null)
         {
             // Instantiate the equipment prefab and parent it to the equipmentSlot
-            Instantiate(characterData.equipmentPrefab, weaponSlot1.position, weaponSlot1.rotation, weaponSlot1);
-        }
-        else
-        {
-            Debug.LogWarning("No equipment prefab found for the selected character.");
+            GameObject equipmentInstance = Instantiate(characterData.equipmentPrefab, weaponSlot1.position, weaponSlot1.rotation, weaponSlot1);
+            
+            StarterWand wand = equipmentInstance.GetComponent<StarterWand>();
+            if (wand != null)
+            {
+                Transform firePoint = firePointAngle.GetChild(0);
+                wand.SetFirePoint(firePoint);
+            }
+            else
+            {
+                Debug.LogWarning("No equipment prefab found for selected character");
+            }
         }
     }
 }

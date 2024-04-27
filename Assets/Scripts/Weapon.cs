@@ -9,5 +9,9 @@ public class Weapon : MonoBehaviour
     {
         Debug.Log("Default Attack");
     }
-}
 
+    public void SetFirePoint(Transform newFirePoint)
+    {
+        firePoint = newFirePoint;
+    }
+}

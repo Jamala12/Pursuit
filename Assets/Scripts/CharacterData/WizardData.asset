@@ -27,3 +27,4 @@ MonoBehaviour:
   baseManaRegen: 15
   baseAttackSpeed: 0.5
   baseMovementSpeed: 7
+  equipmentPrefab: {fileID: 6067186275577899274, guid: 8e210af7e0c313d40855df65f3eaa514, type: 3}
