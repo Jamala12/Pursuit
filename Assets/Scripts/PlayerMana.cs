@@ -85,7 +85,6 @@ public class PlayerMana : MonoBehaviour
 
     private void UpdateManaUI()
     {
-        // Assuming manaUI is a reference to a UI component that displays mana
         manaUI.UpdateManaUI(currentMana);
     }
 }
