@@ -5,11 +5,13 @@ using UnityEngine;
 // Manages the health functionality of the player in the game.
 public class PlayerHealth : MonoBehaviour
 {
-    private int currentHealth; // Current health of the player.
+    public int currentHealth; // Current health of the player.
     private int maxHealth; // Maximum health the player can have.
     private float healthRegenRate; // Rate at which the player's health regenerates over time.
     private LoadCharacter loadCharacter; // Component to load character data.
     private HealthUI healthUI; // Reference to the Health UI manager.
+    private Coroutine regenCoroutine;
+    private float delayAfterDamage = 3f;
 
     private void Awake()
     {
@@ -34,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.LogError("HealthUI component not found in the scene."); // Error log if HealthUI is not found.
         }
-        StartCoroutine(RegenerateHealth()); // Start the health regeneration coroutine.
+        regenCoroutine = StartCoroutine(RegenerateHealth()); // Start the health regeneration coroutine.
     }
 
     // Initialize health values based on the selected character data.
@@ -51,6 +53,12 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.LogError("Failed to load character data for health initialization."); // Error log if character data is not available.
         }
+    }
+
+    private IEnumerator DelayAndRegenerateHealth()
+    {
+        yield return new WaitForSeconds(delayAfterDamage); // Wait for a few seconds after taking damage
+        regenCoroutine = StartCoroutine(RegenerateHealth());
     }
 
     // Coroutine to regenerate health over time.
@@ -71,10 +79,15 @@ public class PlayerHealth : MonoBehaviour
     // Method to handle damage received by the player.
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage; // Subtract damage from current health.
-        Debug.Log("Damage Taken"); // Log damage taken.
-        healthUI.UpdateHealthUI(currentHealth); // Update the health UI to reflect the new health value.
-        CheckHealth(); // Check if player's health has reached zero or below.
+        if (regenCoroutine != null)
+            StopCoroutine(regenCoroutine);
+
+        currentHealth -= damage;
+        Debug.Log("Damage Taken");
+        healthUI.UpdateHealthUI(currentHealth);
+        CheckHealth();
+
+        regenCoroutine = StartCoroutine(DelayAndRegenerateHealth());
     }
 
     // Check the player's health status.

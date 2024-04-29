@@ -12,8 +12,6 @@ public class StarterAxe : Weapon
         if (slashPrefab != null && firePoint != null)
         {
             GameObject projectile = Instantiate(slashPrefab, firePoint.position, firePoint.rotation);
-
-            Debug.Log("StarterAxe Attack");
         }
     }
 }

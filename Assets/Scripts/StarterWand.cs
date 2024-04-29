@@ -12,8 +12,6 @@ public class StarterWand : Weapon
         if (projectilePrefab != null && firePoint != null)
         {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-
-            Debug.Log("StarterWand Attack");
         }
     }
 }

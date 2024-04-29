@@ -5,8 +5,9 @@ public class AbilityHolder : MonoBehaviour
     public Ability[] abilities; // Array of abilities
     public Transform firePoint; // Assign this in the inspector
     public PlayerMana playerMana; // Reference to the player's mana script
-    private float[] cooldownTimes;
+    public float[] cooldownTimes;
     private float[] activeTimes;
+    public AbilityUI abilityUI;
 
     private enum AbilityState
     {
@@ -24,16 +25,24 @@ public class AbilityHolder : MonoBehaviour
         cooldownTimes = new float[abilities.Length];
         activeTimes = new float[abilities.Length];
         states = new AbilityState[abilities.Length];
+
         for (int i = 0; i < abilities.Length; i++)
         {
             states[i] = AbilityState.Ready;
         }
+
+        abilityUI.UpdateAbilityUI();
     }
 
     void Update()
     {
         for (int i = 0; i < abilities.Length; i++)
         {
+            if (abilities[i] == null)
+            {
+                continue;  // Skip this iteration if the ability is not assigned
+            }
+
             switch (states[i])
             {
                 case AbilityState.Ready:
@@ -74,4 +83,5 @@ public class AbilityHolder : MonoBehaviour
             }
         }
     }
+
 }
