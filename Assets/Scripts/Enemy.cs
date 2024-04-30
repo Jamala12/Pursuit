@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
     public float speed = 2.0f;
     public float detectionRadius = 5.0f;
     public int damage = 5;
+    public int health = 15;
     private Transform player;
     private Rigidbody2D rb;
     private Coroutine damageCoroutine; // To keep track of the damage coroutine
@@ -67,5 +68,22 @@ public class Enemy : MonoBehaviour
             damageCoroutine = null; // Ensure the coroutine is marked as stopped
         }
     }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;  // Reduce health by the damage amount
+        if (health <= 0)
+        {
+            Die();  // Call the die function if health falls below or equals zero
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Enemy died.");  // Log message or handle as needed
+        Destroy(gameObject);  // Remove enemy from game
+    }
+
+
 }
 

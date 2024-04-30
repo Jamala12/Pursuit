@@ -31,6 +31,7 @@ public class LoadCharacter : MonoBehaviour
         InitializeAbilities();
     }
 
+
     private void InitializeAbilities()
     {
         CharacterData characterData = GetSelectedCharacterData();
@@ -104,6 +105,7 @@ public class LoadCharacter : MonoBehaviour
             {
                 Transform firePoint = firePointAngle.GetChild(0);
                 weapon.SetFirePoint(firePoint);
+                weapon.InitializeAttack(characterData.baseAttackDamage);
             }
             else
             {

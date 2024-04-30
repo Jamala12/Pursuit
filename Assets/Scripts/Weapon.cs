@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public int finalDamage;
     public Transform firePoint;
+    public int damageMultiplier = 1;
     public virtual void Attack()
     {
         Debug.Log("Default Attack");
@@ -13,5 +15,10 @@ public class Weapon : MonoBehaviour
     public void SetFirePoint(Transform newFirePoint)
     {
         firePoint = newFirePoint;
+    }
+
+    public void InitializeAttack(int baseDamage)
+    {
+        finalDamage = baseDamage * damageMultiplier;
     }
 }

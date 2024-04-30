@@ -13,6 +13,8 @@ public class StarterSword : Weapon
         {
             Quaternion rotationOffset = Quaternion.Euler(0, 0, -90);
             GameObject projectile = Instantiate(slashPrefab, firePoint.position, firePoint.rotation * rotationOffset);
+            Attack attackComponent = projectile.GetComponent<Attack>();
+            attackComponent.InitializeDamage(finalDamage);
         }
     }
 }

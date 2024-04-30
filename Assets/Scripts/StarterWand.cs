@@ -12,6 +12,8 @@ public class StarterWand : Weapon
         if (projectilePrefab != null && firePoint != null)
         {
             GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+            Attack attackComponent = projectile.GetComponent<Attack>();
+            attackComponent.InitializeDamage(finalDamage);
         }
     }
 }
