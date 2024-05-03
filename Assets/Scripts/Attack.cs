@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -6,23 +7,20 @@ public class Attack : MonoBehaviour
     public float maxRange = 5f;
     protected float startTime;
     protected Vector3 startPosition;
-    private int damage; // Store the damage
+    public int damage; // Store the damage
+    protected Rigidbody2D rb; // Moved to protected to allow access in derived classes
 
     protected virtual void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.right * moveSpeed;
         startTime = Time.time;
         startPosition = transform.position;
     }
 
     protected virtual void Update()
     {
-        Move();
         CheckRange();
-    }
-
-    protected virtual void Move()
-    {
-        transform.position += transform.right * moveSpeed * Time.deltaTime;
     }
 
     protected virtual void CheckRange()
@@ -38,24 +36,31 @@ public class Attack : MonoBehaviour
         this.damage = damage; // Initialize the damage
     }
 
-    void OnCollisionEnter2D(Collision2D hitInfo)
+    protected virtual void OnTriggerEnter2D(Collider2D hitInfo)
     {
         if (hitInfo.gameObject.CompareTag("Enemy"))
         {
-            // Assume the enemy has a component called 'EnemyHealth' that includes a TakeDamage method
-            Enemy enemyHealth = hitInfo.gameObject.GetComponent<Enemy>();
-            if (enemyHealth != null)
+            Enemy enemy = hitInfo.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
             {
-                enemyHealth.TakeDamage(damage);
+                enemy.TakeDamage(damage);
             }
             else
             {
-                Debug.LogError("EnemyHealth component not found on the enemy.");
+                Debug.LogError("Enemy component script not found on collided object.");
             }
-
-            // Optionally destroy the attack after applying damage
-            Destroy(gameObject);
+        }
+        else if (hitInfo.gameObject.CompareTag("Prop"))
+        {
+            Prop prop = hitInfo.gameObject.GetComponent<Prop>();
+            if (prop != null)
+            {
+                prop.TakeDamage();
+            }
+            else
+            {
+                Debug.LogError("Prop component script not found on collided object.");
+            }
         }
     }
 }
-

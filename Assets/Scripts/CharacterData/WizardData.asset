@@ -21,8 +21,7 @@ MonoBehaviour:
   characterSprite: {fileID: 21300000, guid: 13556502bb7ae72429c34ba47d87e3ed, type: 3}
   baseHealth: 100
   baseMana: 150
-  baseAttackDamage: 0
-  baseMagicDamage: 10
+  baseAttackDamage: 10
   baseHealthRegen: 5
   baseManaRegen: 15
   baseAttackSpeed: 0.5

@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -7,17 +7,22 @@ public class Enemy : MonoBehaviour
     public float detectionRadius = 5.0f;
     public int damage = 5;
     public int health = 15;
-    private Transform player;
-    private Rigidbody2D rb;
+    protected Transform player;
+    protected Rigidbody2D rb;
     private Coroutine damageCoroutine; // To keep track of the damage coroutine
 
-    void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
+    {
+        Chase();
+    }
+
+    protected virtual void Chase()
     {
         if (player != null)
         {
@@ -69,7 +74,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         health -= damage;  // Reduce health by the damage amount
         if (health <= 0)

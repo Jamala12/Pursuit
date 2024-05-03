@@ -79,14 +79,10 @@ public class PlayerHealth : MonoBehaviour
     // Method to handle damage received by the player.
     public void TakeDamage(int damage)
     {
-        if (regenCoroutine != null)
-            StopCoroutine(regenCoroutine);
-
+        StopCoroutine(regenCoroutine);
         currentHealth -= damage;
-        Debug.Log("Damage Taken");
         healthUI.UpdateHealthUI(currentHealth);
         CheckHealth();
-
         regenCoroutine = StartCoroutine(DelayAndRegenerateHealth());
     }
 

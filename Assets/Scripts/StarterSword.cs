@@ -8,13 +8,19 @@ public class StarterSword : Weapon
 
     public override void Attack()
     {
-
         if (slashPrefab != null && firePoint != null)
         {
             Quaternion rotationOffset = Quaternion.Euler(0, 0, -90);
             GameObject projectile = Instantiate(slashPrefab, firePoint.position, firePoint.rotation * rotationOffset);
             Attack attackComponent = projectile.GetComponent<Attack>();
-            attackComponent.InitializeDamage(finalDamage);
+            if (attackComponent != null)
+            {
+                attackComponent.InitializeDamage(finalDamage);  // Make sure finalDamage is correctly calculated
+            }
+            else
+            {
+                Debug.LogError("Attack component missing on instantiated slash prefab.");
+            }
         }
     }
 }

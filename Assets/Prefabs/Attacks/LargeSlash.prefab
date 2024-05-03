@@ -181,4 +181,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  maxRange: 5
+  damage: 1
   fadeOutTime: 0.2

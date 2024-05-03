@@ -7,25 +7,16 @@ public class Slash : Attack
 
     protected override void Start()
     {
-        base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
-        {
-            Debug.LogError("No SpriteRenderer found on the slash prefab.");
-            Destroy(gameObject);
-            return;
-        }
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.up * moveSpeed;
+        startTime = Time.time;
+        startPosition = transform.position;
     }
 
-    protected void Update()
+    protected override void Update()
     {
-        Move(); // Call the base move method
         UpdateFadeOut();
-    }
-
-    protected override void Move()
-    {
-        transform.position += transform.up * moveSpeed * Time.deltaTime;
     }
 
     private void UpdateFadeOut()
@@ -42,5 +33,3 @@ public class Slash : Attack
         }
     }
 }
-
-
