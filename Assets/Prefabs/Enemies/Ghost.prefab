@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   detectionRadius: 5
-  damage: 5
+  damage: 2
   health: 15
   percentage: 0.5
   missEffectPrefab: {fileID: 8347008298093642726, guid: 59a544ac04dd2804495c01db5d6bc532, type: 3}

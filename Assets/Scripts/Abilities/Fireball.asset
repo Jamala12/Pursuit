@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fireball
   m_EditorClassIdentifier: 
   abilityName: Fireball
-  cooldownTime: 1.5
+  cooldownTime: 0.5
   activeTime: 0
-  manaCost: 50
+  manaCost: 20
   iconPrefab: {fileID: -1487801967, guid: 168a975a30bca774f88e81aae68e62ad, type: 3}
-  fireballPrefab: {fileID: 3167811727689791706, guid: 142c667c8140ce445bc5a06f8fe45121, type: 3}
+  projectilePrefab: {fileID: 3167811727689791706, guid: 142c667c8140ce445bc5a06f8fe45121, type: 3}

@@ -18,7 +18,7 @@ public class Projectile : Attack
     protected override void OnTriggerEnter2D(Collider2D hitInfo)
     {
         base.OnTriggerEnter2D(hitInfo);
-        if (hitInfo.CompareTag("Wall" ))
+        if (hitInfo.CompareTag("Wall") || hitInfo.CompareTag("Enemy") || hitInfo.CompareTag("Prop"))
         {
             Destroy(gameObject);
         }

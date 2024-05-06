@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 885f44ca9b4a0464aacdc7adc71d6b97, type: 3}
+  m_Name: Rat
+  m_EditorClassIdentifier: 
+  enemyTypes:
+  - {fileID: 4511095984793113071, guid: 785a427f047f56743ba35e8508bd69b2, type: 3}
+  groupSize: 1
+  formation: centre

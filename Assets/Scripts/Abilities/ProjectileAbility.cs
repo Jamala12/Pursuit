@@ -1,18 +1,18 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Abilities/Fireball Ability")]
-public class FireballAbility : Ability
+[CreateAssetMenu(menuName = "Abilities/Projectile Ability")]
+public class projectileAbility : Ability
 {
-    public GameObject fireballPrefab;
+    public GameObject projectilePrefab;
 
     public override bool Activate(GameObject owner, Transform firePoint, PlayerMana playerMana)
     {
         // First check and consume mana
         if (playerMana.UseMana(manaCost))
         {
-            if (fireballPrefab != null && firePoint != null)
+            if (projectilePrefab != null && firePoint != null)
             {
-                Instantiate(fireballPrefab, firePoint.position, firePoint.rotation);
+                Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
                 return true;
             }
             else

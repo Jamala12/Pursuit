@@ -10,11 +10,14 @@ public class Enemy : MonoBehaviour
     protected Transform player;
     protected Rigidbody2D rb;
     private Coroutine damageCoroutine; // To keep track of the damage coroutine
+    protected bool isChase = true;
+    private SpriteRenderer spriteRenderer; // Reference to the sprite renderer component
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
     }
 
     protected virtual void FixedUpdate()
@@ -24,7 +27,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Chase()
     {
-        if (player != null)
+        if (player != null && isChase == true)
         {
             float distance = Vector2.Distance(transform.position, player.position);
             if (distance <= detectionRadius)
@@ -45,6 +48,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && damageCoroutine == null)
         {
             damageCoroutine = StartCoroutine(ApplyDamage());
+            isChase = false;
         }
     }
 
@@ -53,6 +57,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             StopDamageCoroutine();
+            isChase = true;
         }
     }
 
@@ -61,7 +66,7 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             player.GetComponent<PlayerHealth>().TakeDamage(damage);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
@@ -81,6 +86,10 @@ public class Enemy : MonoBehaviour
         {
             Die();  // Call the die function if health falls below or equals zero
         }
+        else
+        {
+            StartCoroutine(FlashColor(Color.red));  // Flash color when taking damage
+        }
     }
 
     private void Die()
@@ -89,6 +98,12 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);  // Remove enemy from game
     }
 
-
+    private IEnumerator FlashColor(Color color)
+    {
+        spriteRenderer.color = color;  // Change the color to red
+        yield return new WaitForSeconds(0.1f);  // Wait for 0.1 seconds
+        spriteRenderer.color = Color.white;  // Reset the color to white
+    }
 }
+
 

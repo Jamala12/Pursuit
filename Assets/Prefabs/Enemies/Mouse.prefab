@@ -181,5 +181,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   detectionRadius: 7
-  damage: 5
+  damage: 2
   health: 30

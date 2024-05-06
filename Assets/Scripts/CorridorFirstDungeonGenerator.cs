@@ -16,6 +16,12 @@ public class CorridorFirstDungeonGenerator : RandomWalkMapGenerator
 
     protected override void RunProceduralGeneration()
     {
+        if (placer == null)
+        {
+            Debug.LogError("Placer is not initialized.");
+            return;
+        }
+        placer.ClearObjects();
         CorridorFirstGenerator(); // Primary method that coordinates the dungeon generation.
     }
 
@@ -26,11 +32,13 @@ public class CorridorFirstDungeonGenerator : RandomWalkMapGenerator
 
         List<List<Vector2Int>> corridors = CreateCorridors(floorPositions, potentialRoomPositions); // Generate corridors.
 
-        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions); // Generate rooms based on potential positions.
+        PropsAndEnemiesPreset selectedPreset = presets[UnityEngine.Random.Range(0, presets.Length)];
+
+        HashSet<Vector2Int> roomPositions = CreateRooms(potentialRoomPositions, presets); // Generate rooms based on potential positions.
 
         List<Vector2Int> deadEnds = FindAllDeadEnds(floorPositions); // Identify all dead ends in the corridors.
 
-        CreateRoomsAtDeadEnd(deadEnds, roomPositions); // Optionally add rooms at dead ends.
+        CreateRoomsAtDeadEnd(deadEnds, roomPositions, presets); // Optionally add rooms at dead ends.
 
         // Increase corridor size for visual and gameplay purposes.
         for (int i = 0; i < corridors.Count; i++)
@@ -63,17 +71,22 @@ public class CorridorFirstDungeonGenerator : RandomWalkMapGenerator
         return newCorridor;
     }
 
-    private void CreateRoomsAtDeadEnd(List<Vector2Int> deadEnds, HashSet<Vector2Int> roomFloors)
+    private void CreateRoomsAtDeadEnd(List<Vector2Int> deadEnds, HashSet<Vector2Int> roomFloors, PropsAndEnemiesPreset[] presets)
     {
         foreach (var position in deadEnds)
         {
-            if(roomFloors.Contains(position) == false)
+            if (!roomFloors.Contains(position))
             {
                 var room = RunRandomWalk(randomWalkParameters, position);
                 roomFloors.UnionWith(room);
+
+                // Select a preset randomly for each room at dead end
+                PropsAndEnemiesPreset selectedPreset = presets[UnityEngine.Random.Range(0, presets.Length)];
+                placer.PlacePropsAndEnemies(room, position, selectedPreset); // Use the instance here
             }
         }
     }
+
 
     private List<Vector2Int> FindAllDeadEnds(HashSet<Vector2Int> floorPositions)
     {
@@ -97,21 +110,60 @@ public class CorridorFirstDungeonGenerator : RandomWalkMapGenerator
         return deadEnds;
     }
 
-    private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions)
+    private HashSet<Vector2Int> CreateRooms(HashSet<Vector2Int> potentialRoomPositions, PropsAndEnemiesPreset[] presets)
     {
         HashSet<Vector2Int> roomPositions = new HashSet<Vector2Int>();
-        int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count* roomPercent);
+        int roomToCreateCount = Mathf.RoundToInt(potentialRoomPositions.Count * roomPercent);
+        List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).ToList();
 
-        List<Vector2Int> roomsToCreate = potentialRoomPositions.OrderBy(x => Guid.NewGuid()).Take(roomToCreateCount).ToList();
+        bool isFirstRoom = true;
 
-        foreach (var roomPosition in roomsToCreate)
+        foreach (var roomPosition in roomsToCreate.Take(roomToCreateCount))
         {
             var roomFloor = RunRandomWalk(randomWalkParameters, roomPosition);
             roomPositions.UnionWith(roomFloor);
+
+            // Apply the spawn preset to the first room
+            PropsAndEnemiesPreset presetToUse = isFirstRoom ? presets[0] : presets[UnityEngine.Random.Range(1, presets.Length)];
+            placer.PlacePropsAndEnemies(roomFloor, roomPosition, presetToUse);
+
+            if (isFirstRoom)
+            {
+                Vector2Int roomCenter = CalculateRoomCenter(roomFloor);
+                // Assuming you have a method or a way to access the player's game object
+                MovePlayerToSpawn(new Vector3(roomCenter.x, roomCenter.y, 0));
+                isFirstRoom = false;  // Mark the first room as initialized
+            }
         }
         return roomPositions;
-        
     }
+
+    private Vector2Int CalculateRoomCenter(HashSet<Vector2Int> roomFloor)
+    {
+        int x = 0, y = 0;
+        foreach (var pos in roomFloor)
+        {
+            x += pos.x;
+            y += pos.y;
+        }
+        return new Vector2Int(x / roomFloor.Count, y / roomFloor.Count); // Average position, essentially the center
+    }
+
+    private void MovePlayerToSpawn(Vector3 spawnPosition)
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player"); // Make sure your player GameObject has the tag "Player"
+        if (player != null)
+        {
+            player.transform.position = spawnPosition;
+            Debug.Log("Player moved to spawn position: " + spawnPosition);
+        }
+        else
+        {
+            Debug.LogError("Player object not found. Ensure it's tagged correctly in the scene.");
+        }
+    }
+
+
 
     private List<List<Vector2Int>> CreateCorridors(HashSet<Vector2Int> floorPositions, HashSet<Vector2Int> potentialRoomPositions)
     {

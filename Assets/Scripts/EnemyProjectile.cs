@@ -17,6 +17,9 @@ public class EnemyProjectile : Projectile
             {
                 Debug.LogError("Player component not found on collided object.");
             }
+        }
+        if (hitInfo.CompareTag("Wall") || hitInfo.CompareTag("Player") || hitInfo.CompareTag("Prop"))
+        {
             Destroy(gameObject);
         }
     }

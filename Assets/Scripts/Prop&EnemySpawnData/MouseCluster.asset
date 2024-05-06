@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb1671b26115a16429991d6f786e8ba6, type: 3}
+  m_Name: MouseCluster
+  m_EditorClassIdentifier: 
+  propPrefabs:
+  - {fileID: 5091686112074604484, guid: ed38ac1a271fb6441aa10b157cff1184, type: 3}
+  - {fileID: 5091686112074604484, guid: ed38ac1a271fb6441aa10b157cff1184, type: 3}
+  - {fileID: 3908658975516845685, guid: 003d41fa4fd954b498b8e255cdce4173, type: 3}
+  - {fileID: 1373556173214228451, guid: 8cbf2b1a3b2281947af8fccf94fdcf8a, type: 3}
+  - {fileID: 2244671514298158812, guid: b0c99be6672279648b39d0d7408b5e35, type: 3}
+  enemyGroups:
+  - {fileID: 11400000, guid: 934dde8b15bc6c44ab6339d7f04b6681, type: 2}
+  maxProps: 10
+  minDistanceFromStart: 2
