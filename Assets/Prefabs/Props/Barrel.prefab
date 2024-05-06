@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5091686112074604480}
   - component: {fileID: 5091686112074604481}
   - component: {fileID: 5091686112074604486}
-  - component: {fileID: 5091686112074604487}
+  - component: {fileID: 2690273691813473757}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Prop
@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5091686112074604480
 SpriteRenderer:
@@ -159,7 +159,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8093382, y: 0.9252309}
   m_EdgeRadius: 0
---- !u!114 &5091686112074604487
+--- !u!114 &2690273691813473757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,9 +168,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5091686112074604484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34ddce7a43eeed04d966c7f6b69cf09e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e2215186f6eaa047a171b6863ddf940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
   shakeDuration: 0.2
   shakeMagnitude: 0.07
+  explosionPrefab: {fileID: 5657722649448535353, guid: 80d23ef20a543c7439ccf1448f8f8cb2, type: 3}
+  spriteRenderer: {fileID: 5091686112074604480}

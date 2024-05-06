@@ -1,11 +1,14 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Prop : MonoBehaviour
 {
     public int health = 2;
     public float shakeDuration = 0.2f;
-    public float shakeMagnitude = 0.07f; 
+    public float shakeMagnitude = 0.07f;
+    public int minXP = 1;
+    public int maxXP = 3;
 
     public void TakeDamage()
     {
@@ -37,8 +40,15 @@ public class Prop : MonoBehaviour
         transform.position = originalPosition;  // Reset position after shaking
     }
 
-    private void Die()
+    public virtual void Die()
     {
+        GiveXP();
         Destroy(gameObject);
+    }
+
+    private void GiveXP()
+    {
+        int xpGained = Random.Range(minXP, maxXP);
+        FindObjectOfType<XpController>().GainXP(xpGained);
     }
 }

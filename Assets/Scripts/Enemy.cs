@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
     private Coroutine damageCoroutine; // To keep track of the damage coroutine
     protected bool isChase = true;
     private SpriteRenderer spriteRenderer; // Reference to the sprite renderer component
+    public int minXP = 5;
+    public int maxXP = 15;
 
     protected virtual void Awake()
     {
@@ -94,8 +96,14 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy died.");  // Log message or handle as needed
+        GiveXP();
         Destroy(gameObject);  // Remove enemy from game
+    }
+
+    private void GiveXP()
+    {
+        int xpGained = Random.Range(minXP, maxXP);
+        FindObjectOfType<XpController>().GainXP(xpGained);
     }
 
     private IEnumerator FlashColor(Color color)
