@@ -1,12 +1,18 @@
 using UnityEngine;
+using static UpgradeCard;
 
 [CreateAssetMenu(fileName = "NewCharacter", menuName = "Character")]
 public class CharacterData : ScriptableObject
 {
     public string characterName;
-    public bool canUseMagic;
-    public bool canUsePhysical;
     public bool canDualWield;
+    public Constrint type;
+    public enum Constrint
+    {
+        MagicOnly,
+        PhysicalOnly,
+        Any
+    }
 
     public Sprite characterSprite;
 

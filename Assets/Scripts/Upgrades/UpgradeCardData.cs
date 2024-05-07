@@ -9,6 +9,7 @@ public class UpgradeCard : ScriptableObject
     public RarityType rarity;
     public bool isMagic;
     public bool isRepeatable;
+    public bool allCanUse;
 
     public enum RarityType
     {

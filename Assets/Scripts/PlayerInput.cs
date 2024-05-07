@@ -26,7 +26,8 @@ public class PlayerInput : MonoBehaviour
         AimAtMouse(); // Update aiming direction each frame.
         timeSinceLastAttack += Time.deltaTime; // Increment the time since last attack by the time elapsed since last frame.
 
-        if (Input.GetButtonDown("Fire1") && timeSinceLastAttack >= 1f / attackSpeed)
+        // Check if Fire1 is being held and if enough time has passed since the last attack
+        if (Input.GetButton("Fire1") && timeSinceLastAttack >= 1f / attackSpeed)
         {
             if (currentWeapon != null)
             {

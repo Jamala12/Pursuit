@@ -8,6 +8,11 @@ public class CameraControl : MonoBehaviour
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
 
+    void Start()
+    {
+        transform.position = player.position + offset;
+    }
+
     void LateUpdate()
     {
         Vector3 desiredPosition = player.position + offset;

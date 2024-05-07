@@ -5,6 +5,7 @@ public class LargeSlash : Slash
 {
     protected override void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * moveSpeed;
         startTime = Time.time;

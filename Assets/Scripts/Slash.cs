@@ -3,7 +3,7 @@ using UnityEngine;
 public class Slash : Attack
 {
     public float fadeOutTime = 0.2f;
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
 
     protected override void Start()
     {

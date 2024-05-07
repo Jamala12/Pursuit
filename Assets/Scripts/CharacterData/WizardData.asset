@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: WizardData
   m_EditorClassIdentifier: 
   characterName: Wizard
-  canUseMagic: 1
-  canUsePhysical: 0
   canDualWield: 0
-  hasReducedDamage: 0
-  spellSlots: 0
+  type: 0
   characterSprite: {fileID: 21300000, guid: 13556502bb7ae72429c34ba47d87e3ed, type: 3}
   baseHealth: 100
   baseMana: 150

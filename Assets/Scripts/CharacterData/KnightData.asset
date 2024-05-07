@@ -13,17 +13,16 @@ MonoBehaviour:
   m_Name: KnightData
   m_EditorClassIdentifier: 
   characterName: Knight
-  canUseMagic: 0
-  canUsePhysical: 1
   canDualWield: 1
+  type: 1
   characterSprite: {fileID: 21300000, guid: a9146559077c57842acfe4826a5c5120, type: 3}
-  baseHealth: 100
+  baseHealth: 200
   baseMana: 0
   baseAttackDamage: 10
   baseHealthRegen: 5
   baseManaRegen: 0
-  baseAttackSpeed: 1.6
-  baseMovementSpeed: 4
+  baseAttackSpeed: 1.5
+  baseMovementSpeed: 5
   equipmentPrefab: {fileID: 7361660206632820646, guid: 8ebb28d6e672a9442a4dbdd65266cbb2, type: 3}
   starterAbilities:
   - {fileID: 0}

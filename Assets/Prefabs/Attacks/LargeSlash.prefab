@@ -29,11 +29,11 @@ Transform:
   m_GameObject: {fileID: 479889224357524845}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.4, y: 0.75, z: 0.6}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4922124056778982777
 SpriteRenderer:
@@ -110,7 +110,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
@@ -158,15 +158,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.125, y: 1}
+    - - {x: -0.19073594, y: 0.9035872}
       - {x: -1.5, y: 1}
-      - {x: -1.5, y: 0.75}
-      - {x: -0.125, y: 0.1875}
+      - {x: -1.4835659, y: 0.8025887}
+      - {x: 0.22011364, y: -0.005325433}
       - {x: -0.6875, y: -1}
-      - {x: 1.0625, y: -1}
-      - {x: 1.5, y: -0.6875}
-      - {x: 1.5, y: 0.375}
-      - {x: 1.0625, y: 0.8125}
+      - {x: 0.84885824, y: -1}
+      - {x: 1.5657357, y: -0.5384985}
+      - {x: 1.5434371, y: 0.25888658}
+      - {x: 0.9145942, y: 0.68979293}
   m_UseDelaunayMesh: 0
 --- !u!114 &594550302053565267
 MonoBehaviour:
