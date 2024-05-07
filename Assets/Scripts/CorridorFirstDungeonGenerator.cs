@@ -155,7 +155,6 @@ public class CorridorFirstDungeonGenerator : RandomWalkMapGenerator
         if (player != null)
         {
             player.transform.position = spawnPosition;
-            Debug.Log("Player moved to spawn position: " + spawnPosition);
         }
         else
         {

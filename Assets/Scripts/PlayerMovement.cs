@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
+    [SerializeField] 
     private float movementSpeed;
     private float InputHorizontal;
     private float InputVertical;
     private SpriteRenderer spriteRenderer;
+    public float MovementSpeed
+    {
+        get => movementSpeed;
+        set => movementSpeed = value;
+    }
 
     private void Awake()
     {
@@ -69,4 +73,16 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
+    public void ApplySpeedBoost(float multiplier, float boostDuration)
+    {
+        StartCoroutine(BoostSpeed(multiplier, boostDuration));
+    }
+
+    private IEnumerator BoostSpeed(float multiplier, float duration)
+    {
+        movementSpeed *= multiplier;
+        yield return new WaitForSeconds(duration);
+        movementSpeed /= multiplier;
+    }
+
 }

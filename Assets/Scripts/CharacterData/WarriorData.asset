@@ -16,14 +16,14 @@ MonoBehaviour:
   canDualWield: 1
   type: 2
   characterSprite: {fileID: 21300000, guid: 914c6634998736f46979fe7045af1c1e, type: 3}
-  baseHealth: 100
+  baseHealth: 250
   baseMana: 100
   baseAttackDamage: 10
-  baseHealthRegen: 3
+  baseHealthRegen: 15
   baseManaRegen: 5
-  baseAttackSpeed: 2
+  baseAttackSpeed: 0.7
   baseMovementSpeed: 5
   equipmentPrefab: {fileID: 1885405734429921237, guid: e37e06362ce3dd74ca7dc09e6362430a, type: 3}
   starterAbilities:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: c7f639e7d22507241a975f36043f2024, type: 2}
+  - {fileID: 11400000, guid: c7f639e7d22507241a975f36043f2024, type: 2}

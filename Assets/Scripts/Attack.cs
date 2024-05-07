@@ -63,4 +63,17 @@ public class Attack : MonoBehaviour
             }
         }
     }
+
+    public void ApplyDamageBoost(float multiplier, float boostDuration)
+    {
+        StartCoroutine(BoostDamage(multiplier, boostDuration));
+    }
+
+    private IEnumerator BoostDamage(float multiplier, float duration)
+    {
+        damage = (int)(damage * multiplier);
+        yield return new WaitForSeconds(duration);
+        damage = (int)(damage / multiplier);
+    }
+
 }

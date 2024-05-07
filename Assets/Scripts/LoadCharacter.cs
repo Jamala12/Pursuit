@@ -30,6 +30,7 @@ public class LoadCharacter : MonoBehaviour
         ApplyCharacterSprite();
         LoadEquipment();
         InitializeAbilities();
+        SetCharacterConstraintsToDeck();
     }
 
 
@@ -38,7 +39,18 @@ public class LoadCharacter : MonoBehaviour
         CharacterData characterData = GetSelectedCharacterData();
         if (characterData != null && characterData.starterAbilities != null && abilityHolder != null)
         {
-            abilityHolder.abilities = characterData.starterAbilities;
+            abilityHolder.abilities = new Ability[characterData.starterAbilities.Length];
+            for (int i = 0; i < characterData.starterAbilities.Length; i++)
+            {
+                if (characterData.starterAbilities[i] != null)
+                {
+                    abilityHolder.abilities[i] = characterData.starterAbilities[i]; // Direct assignment if pre-initialized
+                }
+                else
+                {
+                    abilityHolder.abilities[i] = ScriptableObject.CreateInstance<NoneAbility>(); // Safe fallback
+                }
+            }
         }
         else
         {
@@ -67,7 +79,7 @@ public class LoadCharacter : MonoBehaviour
     public float GetMovementSpeed()
     {
         CharacterData characterData = GetSelectedCharacterData();
-        return characterData != null ? characterData.baseMovementSpeed : 0f;
+        return characterData != null ? characterData.baseMovementSpeed : 3f;
     }
 
     public CharacterData GetSelectedCharacterData()
@@ -114,5 +126,20 @@ public class LoadCharacter : MonoBehaviour
             }
         }
     }
+
+    private void SetCharacterConstraintsToDeck()
+    {
+        UpgradeDeck deck = FindObjectOfType<UpgradeDeck>();
+        CharacterData data = GetSelectedCharacterData();
+        if (deck != null && data != null)
+        {
+            deck.SetCharacterConstraintType(data.type);
+        }
+        else
+        {
+            Debug.LogError("UpgradeDeck not found in the scene or character data is null.");
+        }
+    }
+
 }
 

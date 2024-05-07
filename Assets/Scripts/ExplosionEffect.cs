@@ -40,6 +40,5 @@ public class ExplosionEffect : MonoBehaviour
                 prop.Die();
             }
         }
-        Destroy(gameObject, 1f);  // Delay the destruction to ensure the physics response is calculated
     }
 }

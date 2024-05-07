@@ -5,11 +5,36 @@ using UnityEngine;
 // Manages the player's mana including initialization, regeneration, and consumption.
 public class PlayerMana : MonoBehaviour
 {
-    private int currentMana; // Current amount of mana available to the player.
-    private int maxMana; // Maximum mana capacity based on character data.
-    private float manaRegenRate; // Rate at which mana regenerates over time.
+    [SerializeField] 
+    private int maxMana;
+    [SerializeField] 
+    private int currentMana;
+    [SerializeField] 
+    private float manaRegenRate;
     private LoadCharacter loadCharacter; // Component to load character data.
     private ManaUI manaUI; // Reference to the Mana UI manager.
+    public int MaxMana
+    {
+        get => maxMana;
+        set
+        {
+            maxMana = value;
+            manaUI.UpdateMaxManaUI(maxMana);
+        }
+            
+    }
+
+    public int CurrentMana
+    {
+        get => currentMana;
+        set => currentMana = value;
+    }
+
+    public float ManaRegenRate
+    {
+        get => manaRegenRate;
+        set => manaRegenRate = value; 
+    }
 
     private void Awake()
     {

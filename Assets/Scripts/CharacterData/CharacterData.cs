@@ -6,13 +6,7 @@ public class CharacterData : ScriptableObject
 {
     public string characterName;
     public bool canDualWield;
-    public Constrint type;
-    public enum Constrint
-    {
-        MagicOnly,
-        PhysicalOnly,
-        Any
-    }
+    public ConstrintType type;
 
     public Sprite characterSprite;
 

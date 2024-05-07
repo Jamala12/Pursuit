@@ -9,39 +9,21 @@ public class AbilityUI : MonoBehaviour
 
     public void UpdateAbilityUI()
     {
-        if (abilityHolder.abilities.Length <= 2)
+        for (int i = 0; i < abilityHolder.abilities.Length; i++)
         {
-            cooldownSliders[cooldownSliders.Length - 1].gameObject.SetActive(false);
-        }
-        UpdateAbilityIcon();
-    }
-
-    public void UpdateAbilityIcon()
-    {
-        // Check the shortest array length to prevent out of bounds errors
-        int count = Mathf.Min(abilityHolder.abilities.Length, abilityIcons.Length, cooldownSliders.Length);
-
-        for (int i = 0; i < count; i++)
-        {
-            if (abilityHolder.abilities[i] != null)
+            Ability ability = abilityHolder.abilities[i];
+            if (ability != null && !(ability is NoneAbility))
             {
-                if (abilityHolder.abilities[i].iconPrefab != null)
-                {
-                    abilityIcons[i].sprite = abilityHolder.abilities[i].iconPrefab; // Set the icon sprite
-                    abilityIcons[i].color = new Color(1, 1, 1, 1); // Set alpha to 1 (opaque)
-                }
-                else
-                {
-                    abilityIcons[i].color = new Color(1, 1, 1, 0); // Set alpha to 0 (transparent) if no icon prefab
-                }
+                abilityIcons[i].sprite = ability.iconPrefab;
+                abilityIcons[i].color = Color.white; // Ensure icon is visible
             }
             else
             {
-                abilityIcons[i].color = new Color(1, 1, 1, 0); // Set alpha to 0 (transparent) if no ability
+                abilityIcons[i].sprite = null;
+                abilityIcons[i].color = Color.clear; // Make icon transparent if NoneAbility
             }
         }
     }
-
 
     void Update()
     {

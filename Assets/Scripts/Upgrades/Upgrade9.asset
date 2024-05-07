@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a06237546d27a43a60febf925b49e2, type: 3}
+  m_Name: Upgrade9
+  m_EditorClassIdentifier: 
+  cardName: Flameburst
+  icon: {fileID: 21300000, guid: da44888a82535974c863d817c1c9ec88, type: 3}
+  description: Equip Flame Burst Ability
+  rarity: 2
+  type: 0
+  isRepeatable: 0
+  ability: {fileID: 11400000, guid: 0b95c4ecc0fe0ef40b7c1c3a25dea791, type: 2}

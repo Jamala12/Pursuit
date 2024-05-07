@@ -15,4 +15,8 @@ public class HealthUI : MonoBehaviour
     {
         slider.value= health;
     }
+    public void UpdateMaxHealthUI(int health)
+    {
+        slider.maxValue = health;
+    }
 }

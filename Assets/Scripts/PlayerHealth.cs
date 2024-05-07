@@ -5,13 +5,31 @@ using UnityEngine;
 // Manages the health functionality of the player in the game.
 public class PlayerHealth : MonoBehaviour
 {
-    public int currentHealth; // Current health of the player.
-    private int maxHealth; // Maximum health the player can have.
+    [SerializeField] 
+    private int maxHealth;
+    [SerializeField] 
+    private int currentHealth;
     private float healthRegenRate; // Rate at which the player's health regenerates over time.
     private LoadCharacter loadCharacter; // Component to load character data.
     private HealthUI healthUI; // Reference to the Health UI manager.
     private Coroutine regenCoroutine;
     private float delayAfterDamage = 3f;
+
+    public int MaxHealth
+    {
+        get => maxHealth;
+        set 
+        { 
+            maxHealth = value;
+            healthUI.UpdateMaxHealthUI(maxHealth);
+        }
+    }
+
+    public int CurrentHealth
+    {
+        get => currentHealth;
+        set => currentHealth = value;  // Direct assignment, no validation
+    }
 
     private void Awake()
     {
@@ -105,6 +123,12 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player has died."); // Log that the player has died.
         // Implement additional death logic here, such as triggering a death animation.
     }
+
+    public IEnumerator BoostHealthRegeneration(float duration, float multiplier)
+    {
+        float originalRegenRate = healthRegenRate;
+        healthRegenRate *= multiplier;
+        yield return new WaitForSeconds(duration);
+        healthRegenRate = originalRegenRate;
+    }
 }
-
-

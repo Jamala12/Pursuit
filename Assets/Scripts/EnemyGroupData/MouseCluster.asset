@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTypes:
   - {fileID: 8569096277721329776, guid: 92740d919460e0744933d2a0e235e174, type: 3}
-  groupSize: 6
+  groupSize: 9
   formation: cluster

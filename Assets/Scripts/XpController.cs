@@ -41,12 +41,19 @@ public class XpController : MonoBehaviour
 
     private void LevelUp()
     {
-        Debug.Log("Level up! New level: " + currentLevel);
-        // Initialize the UI for the next level with the new XP threshold
         if (xpUI != null)
         {
             xpUI.InitializeXpUI(currentXp, nextLevelXp);
             xpUI.UpdateLevelUI(currentLevel);
+        }
+        UpgradeDeck deck = GetComponent<UpgradeDeck>();
+        if (deck != null)
+        {
+            deck.SelectCards();
+        }
+        else
+        {
+            Debug.LogError("Failed to find the UpgradeDeck component on this GameObject.");
         }
     }
 

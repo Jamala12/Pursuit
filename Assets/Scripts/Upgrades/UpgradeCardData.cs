@@ -6,10 +6,19 @@ using UnityEngine;
 public class UpgradeCard : ScriptableObject
 {
     public string cardName;
+    public Sprite icon;
+    public string description;
     public RarityType rarity;
-    public bool isMagic;
+    public ConstrintType type;
     public bool isRepeatable;
-    public bool allCanUse;
+    public Ability ability;
+
+    public enum ConstrintType
+    {
+        MagicOnly,
+        PhysicalOnly,
+        Any
+    }
 
     public enum RarityType
     {

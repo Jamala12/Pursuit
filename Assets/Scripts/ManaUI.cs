@@ -20,4 +20,8 @@ public class ManaUI : MonoBehaviour
     {
         slider.value = mana; // Adjust the slider value to match the current mana amount.
     }
+    public void UpdateMaxManaUI(int mana)
+    {
+        slider.maxValue = mana;
+    }
 }

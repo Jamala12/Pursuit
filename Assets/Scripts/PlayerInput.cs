@@ -8,8 +8,14 @@ public class PlayerInput : MonoBehaviour
     public Transform firePointAngle; // Transform to control the direction the weapon fires towards.
     private Weapon currentWeapon; // Currently equipped weapon.
     private LoadCharacter loadCharacter; // Component to load character data.
-    private float attackSpeed; // Attack speed derived from character data.
+    [SerializeField] 
+    private float attackSpeed;
     private float timeSinceLastAttack = 10f; // Time elapsed since the last attack.
+    public float AttackSpeed
+    {
+        get => attackSpeed;
+        set => attackSpeed = value;
+    }
 
     void Start()
     {
@@ -54,4 +60,17 @@ public class PlayerInput : MonoBehaviour
         screenPosition.z = Camera.main.nearClipPlane; // Set Z to the near clip plane of the camera.
         return Camera.main.ScreenToWorldPoint(screenPosition); // Convert to world position.
     }
+
+    public void ApplyAttackSpeedBoost(float multiplier, float duration)
+    {
+        StartCoroutine(BoostAttackSpeed(multiplier, duration));
+    }
+
+    private IEnumerator BoostAttackSpeed(float multiplier, float duration)
+    {
+        attackSpeed *= multiplier; // Increase the attack speed
+        yield return new WaitForSeconds(duration); // Wait for the duration of the boost
+        attackSpeed /= multiplier; // Revert the attack speed back to normal
+    }
+
 }
