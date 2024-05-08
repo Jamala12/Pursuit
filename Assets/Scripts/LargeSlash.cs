@@ -19,13 +19,20 @@ public class LargeSlash : Slash
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);
-                Debug.Log("Damage applied: " + damage);
             }
             else
             {
                 Debug.LogError("Enemy component not found on collided object.");
             }
             Destroy(gameObject);
+        }
+        if (hitInfo.gameObject.CompareTag("Enemy Attack"))
+        {
+            EnemyProjectile projectile = hitInfo.gameObject.GetComponent<EnemyProjectile>();
+            if (projectile != null)
+            {
+                projectile.Die();
+            }
         }
     }
 }

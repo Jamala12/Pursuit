@@ -7,9 +7,17 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField] 
     private float movementSpeed;
+    [SerializeField]
     private float InputHorizontal;
+    [SerializeField]
     private float InputVertical;
+    [SerializeField]
     private SpriteRenderer spriteRenderer;
+    [SerializeField] 
+    private AudioClip footstepSound;
+    private float footstepCooldown = 0.5f;
+    private float lastFootstepTime = 0;
+
     public float MovementSpeed
     {
         get => movementSpeed;
@@ -67,12 +75,23 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = new Vector2(InputHorizontal * movementSpeed, InputVertical * movementSpeed);
             }
+            TryPlayFootstepSound();
         }
         else // If there is no movement input set velocity to zero
         {
             rb.velocity = Vector2.zero;
         }
     }
+
+    private void TryPlayFootstepSound()
+    {
+        if (Time.time - lastFootstepTime >= footstepCooldown)
+        {
+            lastFootstepTime = Time.time;
+            AudioManager.Instance.PlaySound(footstepSound, AudioManager.Instance.footstepSource);
+        }
+    }
+
     public void ApplySpeedBoost(float multiplier, float boostDuration)
     {
         StartCoroutine(BoostSpeed(multiplier, boostDuration));
@@ -84,5 +103,4 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(duration);
         movementSpeed /= multiplier;
     }
-
 }

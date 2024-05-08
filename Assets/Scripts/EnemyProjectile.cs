@@ -20,7 +20,12 @@ public class EnemyProjectile : Projectile
         }
         if (hitInfo.CompareTag("Wall") || hitInfo.CompareTag("Player") || hitInfo.CompareTag("Prop"))
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }

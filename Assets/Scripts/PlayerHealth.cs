@@ -15,6 +15,12 @@ public class PlayerHealth : MonoBehaviour
     private Coroutine regenCoroutine;
     private float delayAfterDamage = 3f;
 
+    public GameObject gameOverMenu;
+    public GameObject pauseButton;
+
+    [SerializeField]
+    public AudioClip damageSound;
+
     public int MaxHealth
     {
         get => maxHealth;
@@ -46,6 +52,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
+        gameOverMenu.SetActive(false);
+
         if (healthUI != null)
         {
             healthUI.InitializeHealthUI(maxHealth); // Initialize the health UI to the player's max health at the start.
@@ -102,6 +110,7 @@ public class PlayerHealth : MonoBehaviour
         healthUI.UpdateHealthUI(currentHealth);
         CheckHealth();
         regenCoroutine = StartCoroutine(DelayAndRegenerateHealth());
+        AudioManager.Instance.PlaySound(damageSound, AudioManager.Instance.damageSource);
     }
 
     // Check the player's health status.
@@ -117,11 +126,26 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Method to handle player's death.
     private void Die()
     {
-        Debug.Log("Player has died."); // Log that the player has died.
-        // Implement additional death logic here, such as triggering a death animation.
+        Debug.Log("Player has died.");
+        if (gameOverMenu != null)
+        {
+            gameOverMenu.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("GameOverMenu not assigned in the inspector.");
+        }
+        if (pauseButton != null)
+        {
+            pauseButton.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("PauseButton not assigned in the inspector.");
+        }
+        Time.timeScale = 0;
     }
 
     public IEnumerator BoostHealthRegeneration(float duration, float multiplier)
